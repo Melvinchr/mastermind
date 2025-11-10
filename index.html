@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>MasterMind</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <main>
+            <h1>Mastermind</h1>
+            <div id="menu">
+                <p>Choose Game Mode</p>
+                <button onclick="start1v1()">1v1</button>
+                <button onclick="startPC()">1vPC</button>
+            </div>
+
+            <div id="makePattern" class="hidden">
+                <p>Player 1: Make a 6-peg pattern (confirm when done)</p>
+            <div id="color-grid"></div>
+                <div id="pattern"></div>
+                <button onclick="confirmPattern()">Confirm Pattern</button>
+            </div>
+
+            <div id="guessSection" class="hidden">
+                <p id="guessPrompt"></p>
+                <div id="guess"></div>
+                <div id="color-grid-guess"></div>
+                <button onclick="submitGuess()">Submit Guess</button>
+            </div>
+
+            <div id="endpage" class="hidden">
+                <span id="endmsg"></span><br>
+                <button onclick="location.reload()">Play Again</button>
+            </div>
+        </main>
+        <script src="mastermind.js"></script>
+    </body>
+</html>
