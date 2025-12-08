@@ -181,7 +181,9 @@ function evaluateGuess(guess, answer) {
 
 // -------------------- SHOW FEEDBACK PINS --------------------
 function showFeedback(evaluation, row) {
-    const feedbackRow = document.querySelectorAll(`.right .ans_container`)[row];
+    const feedbackRow =
+    document.querySelectorAll(".right .ans_container")[11 - row];
+
 
     let pins = feedbackRow.querySelectorAll(".small_pin");
 
