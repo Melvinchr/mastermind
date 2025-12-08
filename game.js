@@ -1,4 +1,3 @@
-// -------------------- GLOBAL STATE --------------------
 const COLORS = ["red", "blue", "green", "yellow", "purple", "orange"];
 let secretPattern = []; // 4 colors
 let currentGuess = ["", "", "", ""];
@@ -28,7 +27,7 @@ function startvPC() {
 
     // Generate random computer pattern
     secretPattern = Array.from({ length: 4 }, () =>
-        COLORS[Math.floor(Math.random() * COLORS.length)]
+    COLORS[Math.floor(Math.random() * COLORS.length)]
     );
 
     console.log("SECRET PATTERN:", secretPattern);
@@ -40,26 +39,20 @@ function startvPC() {
 const patternPins = document.querySelectorAll("#pattern_answer .big_pin");
 const patternColors = document.querySelectorAll("#pattern_color_select .selector_pin");
 
-patternPins.forEach(pin => {
-    pin.addEventListener("click", () => {
-        patternPins.forEach(p => p.classList.remove("selected"));
-        pin.classList.add("selected");
-    });
-});
-
+// NEW: Auto-fill pattern pins with one click
 patternColors.forEach(colorBtn => {
     colorBtn.addEventListener("click", () => {
-        const selected = document.querySelector("#pattern_answer .big_pin.selected");
-        if (!selected) return;
+        // Find first empty pattern pin
+        let emptyPin = [...patternPins].find(p => !p.dataset.color);
+        if (!emptyPin) return;
 
         const color = colorBtn.id;
-        selected.style.background = color;
-        selected.dataset.color = color;
-        selected.classList.remove("selected");
+        emptyPin.style.background = color;
+        emptyPin.dataset.color = color;
 
-        // Check if all 4 colors are chosen
-        const filled = [...patternPins].every(pin => pin.dataset.color);
-        if (filled) {
+        // If all 4 pins filled → save pattern
+        const allFilled = [...patternPins].every(pin => pin.dataset.color);
+        if (allFilled) {
             secretPattern = [...patternPins].map(p => p.dataset.color);
             console.log("1v1 SECRET PATTERN:", secretPattern);
 
@@ -68,7 +61,6 @@ patternColors.forEach(colorBtn => {
         }
     });
 });
-
 
 // -------------------- START GAME --------------------
 function startGame() {
@@ -181,9 +173,9 @@ function evaluateGuess(guess, answer) {
 
 // -------------------- SHOW FEEDBACK PINS --------------------
 function showFeedback(evaluation, row) {
+    // FIX: Correct mapping of rows (10 is bottom, 1 is top)
     const feedbackRow =
     document.querySelectorAll(".right .ans_container")[11 - row];
-
 
     let pins = feedbackRow.querySelectorAll(".small_pin");
 
@@ -214,12 +206,12 @@ document.getElementById("reset").addEventListener("click", () => {
 // -------------------- INSTRUCTIONS POPUP --------------------
 document.getElementById("instructions").addEventListener("click", () => {
     alert(`
-Mastermind Instructions:
+    Mastermind Instructions:
 
-• Choose a game mode.
-• Pick 4 colors each guess.
-• Black = Correct color & position.
-• White = Correct color but wrong position.
-• Try to guess the pattern in 10 turns!
-`);
+    • Choose a game mode.
+    • Pick 4 colors each guess.
+    • Black = Correct color & position.
+    • White = Correct color but wrong position.
+    • Try to guess the pattern in 10 turns!
+    `);
 });
